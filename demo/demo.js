@@ -49,6 +49,7 @@ exports.launch = function(env) {
 
     var JavaScriptMode = require("ace/mode/javascript").Mode;
     var CssMode = require("ace/mode/css").Mode;
+    var LessMode = require("ace/mode/less").Mode;
     var HtmlMode = require("ace/mode/html").Mode;
     var XmlMode = require("ace/mode/xml").Mode;
     var PythonMode = require("ace/mode/python").Mode;
@@ -99,6 +100,10 @@ exports.launch = function(env) {
     docs.css = new EditSession(document.getElementById("csstext").innerHTML);
     docs.css.setMode(new CssMode());
     docs.css.setUndoManager(new UndoManager());
+
+    docs.less = new EditSession(document.getElementById("lesstext").innerHTML);
+    docs.less.setMode(new LessMode());
+    docs.less.setUndoManager(new UndoManager());
 
     docs.html = new EditSession(document.getElementById("htmltext").innerHTML);
     docs.html.setMode(new HtmlMode());
@@ -154,6 +159,7 @@ exports.launch = function(env) {
         xml: new XmlMode(),
         html: new HtmlMode(),
         css: new CssMode(),
+        less: new LessMode(),
         javascript: new JavaScriptMode(),
         python: new PythonMode(),
         php: new PhpMode(),
@@ -162,7 +168,7 @@ exports.launch = function(env) {
         c_cpp: new CCPPMode(),
         coffee: new CoffeeMode(),
         perl: new PerlMode(),
-				csharp: new CSharpMode()
+        csharp: new CSharpMode()
     };
 
     function getMode() {
@@ -182,6 +188,9 @@ exports.launch = function(env) {
         }
         else if (mode instanceof CssMode) {
             modeEl.value = "css";
+        }
+        else if (mode instanceof LessMode) {
+            modeEl.value = "less";
         }
         else if (mode instanceof HtmlMode) {
             modeEl.value = "html";
@@ -357,6 +366,8 @@ exports.launch = function(env) {
                     mode = "html";
                 } else if (/^.*\.css$/i.test(file.name)) {
                     mode = "css";
+                } else if (/^.*\.less$/i.test(file.name)) {
+                    mode = "less";
                 } else if (/^.*\.py$/i.test(file.name)) {
                     mode = "python";
                 } else if (/^.*\.php$/i.test(file.name)) {
